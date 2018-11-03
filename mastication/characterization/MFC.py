@@ -44,9 +44,14 @@ def rgb2nrgb(rgb):
     for y in range(0, rgb.shape[0]):
         for x in range(0, rgb.shape[1]):
             total = rgb[y, x, 0] + rgb[y, x, 1] + rgb[y, x, 2]
-            nrgb[y, x, 0] = np.round((rgb[y, x, 0] / total) * 255, decimals=0)
-            nrgb[y, x, 1] = np.round((rgb[y, x, 1] / total) * 255, decimals=0)
-            nrgb[y, x, 2] = np.round((rgb[y, x, 2] / total) * 255, decimals=0)
+            if total == 0:
+                nrgb[y, x, 0] = 0
+                nrgb[y, x, 1] = 0
+                nrgb[y, x, 2] = 0
+            else:
+                nrgb[y, x, 0] = np.round((rgb[y, x, 0] / total) * 255, decimals=0)
+                nrgb[y, x, 1] = np.round((rgb[y, x, 1] / total) * 255, decimals=0)
+                nrgb[y, x, 2] = np.round((rgb[y, x, 2] / total) * 255, decimals=0)
     return nrgb
 
 

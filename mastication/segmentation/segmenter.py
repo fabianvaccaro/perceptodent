@@ -5,6 +5,8 @@ from scipy import ndimage
 import matplotlib
 from mastication.capture import sampling
 from skimage import io, color
+from colormath.color_objects import LabColor, XYZColor, sRGBColor
+from colormath.color_conversions import convert_color
 
 class ISegmenter(object):
     def __init__(self):
@@ -35,9 +37,10 @@ class ChewingGumSegmenter(ISegmenter):
     def _segment(self, sampleimage):
         # ms = MeanShift()
         # mask_ms = ms.segment(sampleimage)
-        lab_b = color.rgb2lab(sampleimage.rgb)[:, :, 2]
         h = sampleimage.rgb.shape[0]
         w = sampleimage.rgb.shape[1]
+        labImage = color.rgb2lab(sampleimage.rgb.astype(np.uint8))
+        lab_b = labImage[:, :, 2]
         window_size = 40
         tl = lab_b[0:window_size, 0:window_size].flatten()
         tr = lab_b[0:window_size, w-1-window_size:w-1].flatten()

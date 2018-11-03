@@ -11,8 +11,8 @@ def cmfc(sampleimage):
     r = ms.segment(sampleimage)
     roi_val = r[int(r.shape[0] / 2), int(r.shape[1] / 2)]
     rgb = sampleimage.rgb[r == roi_val]
-    luv = color.rgb2luv(sampleimage.rgb)[r == roi_val]
-    hsi = color.rgb2hsv(sampleimage.rgb)[r == roi_val]
-    nrgb = MFC.rgb2nrgb(sampleimage.rgb)[r == roi_val]
+    luv = color.rgb2luv(sampleimage.rgb.astype(np.uint8))[r == roi_val]
+    hsi = color.rgb2hsv(sampleimage.rgb.astype(np.uint8))[r == roi_val]
+    nrgb = MFC.rgb2nrgb(sampleimage.rgb.astype(np.uint8))[r == roi_val]
     mfc = MFC.extractmfc(rgb, luv, hsi, nrgb)
     return mfc

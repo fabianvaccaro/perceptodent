@@ -96,3 +96,18 @@ def calibrate_samples():
         return 0
     else:
         return 0
+
+def test_calibration():
+    folderlist = ['5', '10', '15', '20']
+    if __name__ == "mastication.assessment.calibration":
+        iters_per_h = 10
+        k0 = 40
+        kmax = 120
+        pool = Pool(8)
+        fileinfo = []
+        for f in folderlist:
+            for filename in glob.glob('mastication/examples/' + f + '/*.tif'):
+                fileinfo.append({'filename': filename, 't_value': int(f)})
+        for finfo in fileinfo:
+            print(process_sample_job(finfo))
+        return 0
